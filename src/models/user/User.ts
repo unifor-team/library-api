@@ -1,0 +1,38 @@
+import { randomUUID } from 'crypto';
+import * as bcrypt from 'bcrypt';
+import { AccountStatus } from './account-status-enum';
+
+export class User {
+  public id: string;
+  public email: string;
+  public password: string;
+  public name: string;
+  public account_status: AccountStatus;
+  public created_at: Date;
+  public updated_at: Date;
+  public deleted_at: Date;
+
+  constructor(
+    email: string,
+    password: string,
+    name: string,
+  ) {
+    this.id = randomUUID();
+    this.email = email;
+    this.password = password;
+    this.name = name;
+    this.account_status = AccountStatus.ACTIVE;
+    this.created_at = new Date();
+  }
+
+  public static async build(
+    email: string,
+    password: string,
+    name: string,
+  ): Promise<User> {
+    const saltOrRounds = 10;
+    const hash = await bcrypt.hash(password, saltOrRounds);
+    return new User(email, hash, name);
+  }
+
+}
