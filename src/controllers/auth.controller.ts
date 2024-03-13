@@ -8,7 +8,6 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   signIn(@Body() loginData: Record<string, any>) {
-    console.log(loginData)
     return this.authService.signIn(loginData.username, loginData.password);
   }
 }
