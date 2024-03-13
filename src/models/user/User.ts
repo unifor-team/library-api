@@ -40,4 +40,12 @@ export class User {
     this.id = id;
   }
 
+  public set updatedAt(date: Date) {
+    this.updated_at = date;
+  }
+
+  public set deletedAt(date: Date) {
+    this.deleted_at = date;
+  }
+
 }
