@@ -26,6 +26,8 @@ export class UserService {
     const updatedUser = await User.build(email, password, name);
 
     updatedUser.identifier = existedUser.id;
+    updatedUser.created_at = existedUser.created_at;
+    updatedUser.updatedAt = new Date();
     return this.userRepository.update(id, updatedUser);
   }
 
@@ -45,6 +47,7 @@ export class UserService {
     const existedUser = await this.userRepository.listById(id);
     if (!existedUser) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     const user = { ...existedUser, account_status: AccountStatus.DISABLED }
+    user.deleted_at = new Date();
     return this.userRepository.delete(id, user);
   }
 }
