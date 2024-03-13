@@ -42,6 +42,12 @@ export class UserService {
     return existedUser;
   }
 
+  async findUserByEmail(email: string) {
+    const userExist = await this.userRepository.findByEmail(email);
+    if (!userExist) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return userExist;
+  }
+
   async delete(id: string) {
     if (!id) throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
     const existedUser = await this.userRepository.listById(id);

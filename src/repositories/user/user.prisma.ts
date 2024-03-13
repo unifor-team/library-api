@@ -33,6 +33,14 @@ export class UserRepository {
     })
   }
 
+  async findByEmail(email: string) {
+    return this.prisma.user.findFirst({
+      where: {
+        email,
+      },
+    })
+  }
+
   async delete(id: string, data: User) {
     return this.prisma.user.update({
       where: {

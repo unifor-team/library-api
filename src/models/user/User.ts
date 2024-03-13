@@ -35,6 +35,10 @@ export class User {
     return new User(email, hash, name);
   }
 
+  public despatchPass(pass: string): Promise<boolean> {
+    return bcrypt.compare(this.password, pass);
+  }
+
   public set identifier(id: string) {
     if (!id) throw new Error('Id is empty.');
     this.id = id;
