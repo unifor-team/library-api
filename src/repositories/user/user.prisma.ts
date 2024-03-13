@@ -11,4 +11,34 @@ export class UserRepository {
       data
     });
   }
+
+  async update(id: string, data: User) {
+    return this.prisma.user.update({
+      where: {
+        id,
+      },
+      data,
+    })
+  }
+
+  async list() {
+    return this.prisma.user.findMany();
+  }
+
+  async listById(id: string) {
+    return this.prisma.user.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
+  async delete(id: string, data: User) {
+    return this.prisma.user.update({
+      where: {
+        id,
+      },
+      data
+    })
+  }
 }

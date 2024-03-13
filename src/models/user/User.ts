@@ -35,4 +35,9 @@ export class User {
     return new User(email, hash, name);
   }
 
+  public set identifier(id: string) {
+    if (!id) throw new Error('Id is empty.');
+    this.id = id;
+  }
+
 }
