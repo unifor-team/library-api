@@ -9,7 +9,7 @@ export class Edition {
     public isbn10: string;
     public isbn13: string;
     public publisher: string;
-    public year_of_publication: Date;
+    // public year_of_publication: Date;
     
 
     constructor(
@@ -25,7 +25,7 @@ export class Edition {
         this.publisher = publisher;
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
-        this.year_of_publication = new Date;
+        // this.year_of_publication = new Date;
         
 
     }

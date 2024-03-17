@@ -26,7 +26,7 @@ export class EditionService {
 
     updatedEdition.identifier = existedEdition.id;
     updatedEdition.publisher = existedEdition.publisher;
-    updatedEdition.year_of_publication = new Date();
+    // updatedEdition.year_of_publication = new Date();
     return this.editionRepository.update(id, updatedEdition);
   }
 
