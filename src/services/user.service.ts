@@ -14,7 +14,7 @@ export class UserService {
     try {
       const { email, password, name } = user;
       const newUser = await User.build(email, password, name);
-      const emailExist = this.findUserByEmail(email);
+      const emailExist = this.userRepository.findByEmail(email);
       if (emailExist) throw new HttpException('Email already exists', HttpStatus.CONFLICT);
       return this.userRepository.create(newUser);
     } catch (err) {
@@ -51,7 +51,9 @@ export class UserService {
 
   async findUserByEmail(email: string) {
     if (!email) throw new HttpException('Wrong data', HttpStatus.BAD_REQUEST);
-    return this.userRepository.findByEmail(email);
+    const userExist = await this.userRepository.findByEmail(email);
+    if (!userExist) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return userExist;
   }
 
   async delete(id: string) {
