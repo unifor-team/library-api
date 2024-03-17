@@ -8,20 +8,24 @@ export class AuthService {
   constructor(private userService: UserService, private jwtService: JwtService) { }
 
   async signIn(email: string, pass: string): Promise<any> {
-    const user = await this.userService.findUserByEmail(email);
+    try {
+      const user = await this.userService.findUserByEmail(email);
 
-    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 
-    const { password } = user;
+      const { password } = user;
 
-    const comparedPassword = bcrypt.compare(pass, password);
+      const comparedPassword = bcrypt.compare(pass, password);
 
-    if (!comparedPassword) throw new HttpException('Credenciais estão com algum erro', HttpStatus.BAD_REQUEST);
+      if (!comparedPassword) throw new HttpException('Credenciais estão com algum erro', HttpStatus.BAD_REQUEST);
 
-    const payload = { ...user };
+      const payload = { ...user };
 
-    return {
-      access_token: await this.jwtService.signAsync(payload)
+      return {
+        access_token: await this.jwtService.signAsync(payload)
+      }
+    } catch (e) {
+      throw new HttpException('Erro ao gerar token JWT', HttpStatus.BAD_REQUEST);
     }
   }
 }
