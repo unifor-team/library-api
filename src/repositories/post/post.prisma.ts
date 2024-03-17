@@ -11,21 +11,21 @@ export class PostRepository {
       data
     });
   }
-  async list(){
+  async list() {
     return this.prisma.posts.findMany();
   }
-  async listById(id: string){
+  async listById(id: string) {
     return this.prisma.posts.findFirst({
-        where:{
-            id,
-        },
+      where: {
+        id,
+      },
     })
   }
-  async delete (id: string){
+  async delete(id: string) {
     return this.prisma.posts.delete({
-        where:{
-            id,
-        }
+      where: {
+        id,
+      }
     })
   }
 

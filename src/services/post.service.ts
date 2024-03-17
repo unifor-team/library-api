@@ -1,9 +1,8 @@
-import { Injectable, HttpException, HttpStatus} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Posts } from 'src/models/Posts/Posts';
 import { CreatePostDTO } from 'src/models/Posts/create-postDTO';
 import { EditPostDTO } from 'src/models/Posts/edit-postDTO';
-import { PostRepository } from 'src/repositories/Post/post.prisma';
-import { AccountStatus } from 'src/models/user/account-status-enum';
+import { PostRepository } from 'src/repositories/post/post.prisma';
 import { PostStatus } from 'src/models/Posts/posts-status';
 
 @Injectable()
@@ -11,18 +10,18 @@ export class PostService {
   constructor(private postRepository: PostRepository) { }
 
   async create(post: CreatePostDTO) {
-    const {user, title, body } = post;
+    const { user, title, body } = post;
     console.log(post)
     const newPost = await Posts.PostBuild(user, title, body);
     return this.postRepository.create(newPost);
   }
 
-  async update(id: string, post: EditPostDTO){
+  async update(id: string, post: EditPostDTO) {
     if (!id) throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
     const existedPost = await this.postRepository.listById(id);
     if (!existedPost) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    const {user, title, body} = post;
-    const updatedPost = await Posts.PostBuild(user,title, body)
+    const { user, title, body } = post;
+    const updatedPost = await Posts.PostBuild(user, title, body)
     updatedPost.identifier = existedPost.id;
     updatedPost.created_at = existedPost.created_at;
     updatedPost.updatedAt = new Date();
